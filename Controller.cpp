@@ -3,7 +3,7 @@
 int Controller::parser(int argc, char *argv[], JSON_ITEM *ret) {
   CLI::App app{"App"};
   app.add_option("-d,--device", (*ret)["device"], "Android device address");
-  app.add_option("-t,--task", (*ret)["task"], "Task to execute (e.g. 1-7)");
+  app.add_option("-t,--task", (*ret)["task"], "Task to execute (e.g. 1-7,prev)");
   app.add_option("-c,--config", "Path of the configuration file");
   app.add_flag("-v,--version", (*ret)["version"], "Print version");
 
