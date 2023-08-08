@@ -4,7 +4,7 @@ project(maad)
 file(GLOB SOURCES "*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
-set(LIB_PATHS "${CMAKE_CURRENT_SOURCE_DIR}" "/usr/lib")
+set(LIB_PATH "/usr/lib")
 
 # maacore
 find_library(MAACORE_LIB MaaCore NAMES MaaCore PATHS ${LIB_PATH})

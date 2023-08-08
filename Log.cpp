@@ -1,7 +1,7 @@
 #include "Maad.h"
 #include <AsstCaller.h>
 #include <spdlog/spdlog.h>
-//模板，debug模式
+
 enum level { INFO, WARN, ERROR, CRITICAL };
 
 void Logger::toConsole(std::string message) { spdlog::info(message); }
