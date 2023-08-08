@@ -5,7 +5,9 @@
 
 void maaCallback(AsstMsgId msg, const char *details_json, void *custom_arg) {
 #ifdef DEBUG
-  printf("callback:%d,%s\n", msg, details_json);
+  // printf("callback:%d,%s\n", msg, details_json);
+  std::cout << "MSG:" << msg << ",JSON:" << details_json
+            << ",ARGS:" << custom_arg << std::endl;
 #endif
 }
 
@@ -13,6 +15,7 @@ class MAA::MaaItem::MaaItemImpl {
 public:
   MaaItemImpl(JSON_ITEM *param);
   ~MaaItemImpl();
+  AsstId getId();
   AsstBool load();
   AsstBool AppendTask(AsstHandle handle, const char *type, const char *params);
   AsstBool start();
@@ -21,8 +24,8 @@ public:
   AsstBool quit(void (*func)());
 
 private:
+  AsstId id = -1;
   AsstBool init();
-  const char *decode(std::string);
   AsstHandle *asst;
   JSON_ITEM *param;
 
@@ -35,12 +38,21 @@ private:
 };
 
 MAA::MaaItem::MaaItemImpl::MaaItemImpl(JSON_ITEM *param) {
+  int seed;
+  seed = time(0);
+  srand(seed);
+  id = rand() % 10000 + 1;
+#ifdef DEBUG
+  std::cout << "MAAID:" << id << std::endl;
+#endif
   asst = new AsstHandle();
   this->param = param;
   this->init();
 }
 
 MAA::MaaItem::MaaItemImpl::~MaaItemImpl() { delete asst; }
+
+AsstId MAA::MaaItem::MaaItemImpl::getId() { return id; }
 
 AsstBool MAA::MaaItem::MaaItemImpl::init() {
   try {
@@ -53,7 +65,8 @@ AsstBool MAA::MaaItem::MaaItemImpl::init() {
     if (!status) {
       return status;
     }
-    *asst = AsstCreateEx(maaCallback, NULL);
+    *asst = AsstCreateEx(
+        maaCallback, reinterpret_cast<void *>(MAA::MaaItem::MaaItemImpl::id));
     if (asst == nullptr) {
       Logger::toConsole("Create Asst instance failed", Logger::CRITICAL);
       return status;
@@ -77,10 +90,18 @@ AsstBool MAA::MaaItem::MaaItemImpl::load() {
     return 1;
   }
   AsstAppendTask(*asst, "StartUp", NULL);
+  
   // Fight
-  std::string Template =
-      fmt::format(fightTemplate, JsonHandler::returnValue(param, "task"));
+  std::string task = JsonHandler::returnValue(param, "task");
+  if (task == "prev") {
+    task = "";
+  }
+  std::string Template = fmt::format(fightTemplate, task);
+#ifdef DEBUG
+  Logger::toConsole(Template, Logger::WARN);
+#endif
   AsstAppendTask(*asst, "Fight", Template.c_str());
+  
   // Recruit
   AsstAppendTask(*asst, "Recruit", recruitTemplate.c_str());
   // Infrast
@@ -122,6 +143,8 @@ AsstBool MAA::MaaItem::MaaItemImpl::quit(void (*func)()) { return 0; }
 MAA::MaaItem::MaaItem(JSON_ITEM *param) { pimpl = new MaaItemImpl(param); }
 
 MAA::MaaItem::~MaaItem() { delete pimpl; }
+
+AsstId MAA::MaaItem::MaaItem::gerId() { return pimpl->getId(); }
 
 AsstBool MAA::MaaItem::load() { return pimpl->load(); }
 

@@ -1,23 +1,20 @@
 #include "Maad.h"
+#include <AsstCaller.h>
 #include <iostream>
-#include <iterator>
-#include <json/config.h>
+#include <map>
 #include <ostream>
+#include <string>
 
 int main(int argc, char *argv[]) {
   try {
-    JSON_ITEM *param = new JSON_ITEM;
-    Controller::parser(argc, argv, param);
-    if (Controller::analyser(param)) {
-      return 0;
-    }
+    JSON_ITEM config;
+    Maad::init(argc, argv, config);
 
-    MAA::MaaItem *maaitem = new MAA::MaaItem(param);
-    maaitem->load();
-    maaitem->start();
+    // MAA::MaaItem *maaitem = new MAA::MaaItem(param);
+    // maaitem->load();
+    // maaitem->start();
 
-    delete maaitem;
-    delete param;
+    // delete maaitem;
     return 0;
   } catch (std::exception e) {
     std::cout << "Exception caught in main(): " << e.what() << std::endl;

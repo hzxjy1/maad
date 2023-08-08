@@ -1,0 +1,28 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(gdb) Launch",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/maad",
+      "args": [
+        "-d",
+        "192.168.240.112:5555",
+        "-t",
+        "1-7"
+      ],
+      // "args": ["-v"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb", // or path to gdb executable on your system
+      "preLaunchTask": "CMake: build" // or the name of a task to execute before launching the debugger
+    }
+  ]
+}
