@@ -1,9 +1,4 @@
 #include "Maad.h"
-#include <AsstCaller.h>
-#include <cstddef>
-#include <iostream>
-#include <ostream>
-#include <string>
 using namespace Controller;
 
 int cli::run(std::string &configPath) {

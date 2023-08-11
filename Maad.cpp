@@ -9,15 +9,18 @@ void Maad::version() {
 }
 
 int Maad::init(int argc, char *argv[], JSON_ITEM &config) {
-  STRING_MAP param;     // 命令行参数
-  JSON_ITEM configJson; // 外部导入配置
+#ifdef DEBUG
+  spdlog::set_level(spdlog::level::debug); // 设置调试级别
+#endif
+  STRING_MAP param;
+  JSON_ITEM configJson;
   std::string configPath;
 
-  (new Controller::cli(argc, argv, param))->run(configPath);
+  (new Controller::cli(argc, argv, param))->run(configPath); // 获取命令行参数
 
-  Maad::importConfig(configJson, configPath);
+  Maad::importConfig(configJson, configPath); // 导入外部配置
 
-  for (const auto &pair : param) { // 将命令行参数和外部导入配置合并
+  for (const auto &pair : param) { // 将命令行参数和外部导入配置参数合并
     if (pair.second.empty()) {
       continue;
     }
@@ -41,7 +44,7 @@ int Maad::importConfig(JSON_ITEM &config, std::string configPath) {
     return 0;
   } else {
     Logger::toConsole("Can not find configuration file! Create it?[y/n]",
-                      Logger::ERROR);
+                      Logger::error);
     return 1;
   }
   return 0;

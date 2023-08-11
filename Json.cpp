@@ -10,7 +10,7 @@ JSON_ITEM JsonHandler::deserialize(const std::string Str) {
   std::string errs;
   std::istringstream iss(Str);
   if (!Json::parseFromStream(readerBuilder, iss, &root, &errs)) {
-    Logger::toConsole("Failed to parse JSON: ", Logger::WARN);
+    Logger::toConsole("Failed to parse JSON: ", Logger::warn);
   }
   return root;
 }

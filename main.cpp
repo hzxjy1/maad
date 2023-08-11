@@ -1,20 +1,26 @@
 #include "Maad.h"
-#include <AsstCaller.h>
-#include <iostream>
-#include <map>
-#include <ostream>
-#include <string>
 
 int main(int argc, char *argv[]) {
   try {
     JSON_ITEM config;
     Maad::init(argc, argv, config);
 
-    // MAA::MaaItem *maaitem = new MAA::MaaItem(param);
-    // maaitem->load();
-    // maaitem->start();
+    STRING_MAP st;
+    st["Fight"] = R"({{"stage": "{}"}})";
+    st["Recruit"] = R"({"select":[4],"confirm":[3,4],"times":4})";
+    st["Infrast"] =
+        R"({"facility": ["Mfg", "Trade", "Power", "Control", "Reception",
+      "Office", "Dorm"],"drones": "Money"})";
+    st["Mall"] =
+        R"({"shopping":true,"buy_first":["许可"],"black_list":["家具","碳"]})";
 
-    // delete maaitem;
+    MAA::MaaItem *maaitem = new MAA::MaaItem(config, st);
+    if (maaitem->load()) {
+      return 1;
+    }
+    maaitem->start();
+
+    delete maaitem;
     return 0;
   } catch (std::exception e) {
     std::cout << "Exception caught in main(): " << e.what() << std::endl;

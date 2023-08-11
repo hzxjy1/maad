@@ -1,3 +1,4 @@
+#include "Log.h"
 #include <AsstCaller.h>
 #include <CLI/CLI.hpp>
 #include <json/json.h>
@@ -19,11 +20,11 @@
 namespace MAA {
 class MaaItem {
 public:
-  MaaItem(JSON_ITEM *param);
+  MaaItem(JSON_ITEM &config, STRING_MAP st);
   ~MaaItem();
   AsstId gerId();
   AsstBool load();
-  AsstBool AppendTask(AsstHandle handle, const char *type, const char *params);
+  AsstBool AppendTask(std::string type, std::string params);
   AsstBool start();
   AsstBool start(void (*func)(), int second); // 连带启动模拟器
   AsstBool quit();
@@ -39,6 +40,7 @@ namespace Maad {
 void version();
 int init(int argc, char *argv[], JSON_ITEM &config);
 int importConfig(JSON_ITEM &config, std::string configPath);
+int buildST();
 } // namespace Maad
 
 namespace Controller {
@@ -67,11 +69,3 @@ AsstBool serializeFile(JSON_ITEM, std::string path); // 将json对象转换为js
 AsstBool addKV(JSON_ITEM *json, std::string key, std::string value);
 std::string returnValue(JSON_ITEM *json, std::string key);
 }; // namespace JsonHandler
-
-namespace Logger {
-enum level { INFO, WARN, ERROR, CRITICAL };
-
-void toConsole(std::string message, enum level l);
-void toConsole(std::string message);
-bool toMaaCore();
-} // namespace Logger
