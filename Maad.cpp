@@ -33,7 +33,7 @@ int Maad::init(int argc, char *argv[], JSON_ITEM &config) {
 int Maad::importConfig(JSON_ITEM &config, std::string configPath) {
   std::string Path1 = configPath;
 #ifdef __linux__
-  std::string Path2 = "../config.json";
+  std::string Path2 = "./config.json";
   std::string Path3 = std::string(getenv("HOME")) + "/.config/maad/config.json";
 #endif
   if (!JsonHandler::deserializeFile(config, Path1)) {
