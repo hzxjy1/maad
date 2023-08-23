@@ -7,7 +7,8 @@ int main(int argc, char *argv[]) {
 
     STRING_MAP st;
     st["Fight"] = R"({{"stage": "{}"}})";
-    st["Recruit"] = R"({"select":[4],"confirm":[3,4],"times":4})";
+    st["Recruit"] =
+        R"({"refresh":true,"select":[4],"confirm":[3,4],"times":4})";
     st["Infrast"] =
         R"({"facility": ["Mfg", "Trade", "Power", "Control", "Reception",
       "Office", "Dorm"],"drones": "Money"})";

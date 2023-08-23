@@ -39,7 +39,7 @@ MAA::MaaItem::MaaItemImpl::MaaItemImpl(JSON_ITEM &config, STRING_MAP st) {
   int seed;
   seed = time(0);
   srand(seed);
-  id = rand() % 10000 + 1;
+  id = rand() % 9000 + 1000;
   Logger::toConsole("maaid:" + fmt::to_string(id), Logger::debug);
 
   this->config = config;
@@ -60,8 +60,6 @@ AsstBool MAA::MaaItem::MaaItemImpl::init() {
       config["option"]["Resource"].asString(); // 资源文件路径
   std::string UserDir =
       config["option"]["UserDir"].asString(); // 日志文件输出路径
-  Logger::toConsole("resource:" + Resource, Logger::debug);
-  Logger::toConsole("userdir:" + UserDir, Logger::debug);
 
   if (!AsstSetUserDir(UserDir.c_str())) {
     return status;

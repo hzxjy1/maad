@@ -37,10 +37,13 @@ int Maad::importConfig(JSON_ITEM &config, std::string configPath) {
   std::string Path3 = std::string(getenv("HOME")) + "/.config/maad/config.json";
 #endif
   if (!JsonHandler::deserializeFile(config, Path1)) {
+    Logger::toConsole("Use config file " + Path1);
     return 0;
   } else if (!JsonHandler::deserializeFile(config, Path2)) {
+    Logger::toConsole("Use config file " + Path2);
     return 0;
   } else if (!JsonHandler::deserializeFile(config, Path3)) {
+    Logger::toConsole("Use config file " + Path3);
     return 0;
   } else {
     Logger::toConsole("Can not find configuration file! Create it?[y/n]",
