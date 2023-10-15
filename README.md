@@ -1,3 +1,4 @@
+不再维护，各位使用Unix-like的博士请选择[这个](https://github.com/MaaAssistantArknights/maa-cli)
 <div align="center">
 
 # Maad
@@ -37,9 +38,4 @@
 4.通过参数启动,命令行参数会优先
     
     ./maad -d ${你的安卓设备ip} -t 1-7
-
-## 其他
-
-计划在下个版本与libMaaCore解耦，并添加下载maa核心库功能。~~以及真正学会git怎么用~~
-
 
